@@ -83,7 +83,7 @@ After finishing communication, disconnect from the MQTT broker:
 client.disconnect()
 ```
 
-Full Example can be found in `example.py`.
+**Full Example can be found in `example.py`.**
 
 ## Configuration
 - `broker_ip`: IP address of the MQTT broker.
