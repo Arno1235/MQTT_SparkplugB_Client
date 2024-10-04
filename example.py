@@ -28,6 +28,13 @@ if __name__ == '__main__':
     # Connect to the MQTT broker
     client.connect()
 
+    # Define a callback to handle incoming messages
+    def custom_callback(client, userdata, message):
+        print(f"Custom handling of message on {message.topic}: {message.payload.decode()}")
+
+    # Subscribe to a test topic
+    client.subscribe('test_group/test_node/data', custom_callback)
+
     # Publish a series of messages to the MQTT broker
     for i in range(10):
         # Create a message with a string, integer, and float

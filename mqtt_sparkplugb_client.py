@@ -97,6 +97,23 @@ class MQTTSparkplugBClient:
         logging.info('Disconnecting to client')
         self.mqtt_client.disconnect()
     
+    def subscribe(self, topic: str, callback) -> None:
+        """
+        Subscribes to the specified MQTT topic and sets a callback function to handle incoming messages.
+
+        Args:
+            topic (str): The MQTT topic to subscribe to.
+            callback (function): A function to be called when a message is received. The function should accept 
+                                three parameters: client, userdata, and message.
+        """
+        def on_message(client, userdata, message):
+            logging.info(f'Received message on topic {message.topic}: {message.payload.decode()}')
+            callback(client, userdata, message)
+
+        self.mqtt_client.subscribe(topic)
+        self.mqtt_client.on_message = on_message
+        logging.info(f'Subscribed to topic: {topic}')
+    
     def publish(self, data: dict[str, Any]) -> None:
         """
         Publishes data to the MQTT broker.
